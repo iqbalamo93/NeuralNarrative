@@ -4,13 +4,14 @@ import remarkMath from 'remark-math';
 import rehypeMathJax from 'rehype-mathjax';
 import react from "@astrojs/react";
 
+import vercel from "@astrojs/vercel/serverless";
+
 // https://astro.build/config
 export default defineConfig({
-	markdown: {
-		remarkPlugins: [remarkMath],
-		rehypePlugins: [rehypeMathJax],
-	  },
-
+  markdown: {
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeMathJax]
+  },
   integrations: [starlight({
     title: 'Home',
     social: {
@@ -28,8 +29,7 @@ export default defineConfig({
       {
         label: 'What is this!',
         link: '/books-review/intro-reviews/' //will change this in future
-      }
-	]
+      }]
     }, {
       label: 'Element of Neural Networks',
       autogenerate: {
@@ -41,5 +41,7 @@ export default defineConfig({
         directory: 'framework-fastrack'
       }
     }]
-  }), react()]
+  }), react()],
+  output: "server",
+  adapter: vercel()
 });
