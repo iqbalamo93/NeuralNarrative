@@ -1,36 +1,48 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: Welcome to Neural Narrative
+description: Chronicles of Innovation, Intelligence, and Imagination.
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Chronicles of Innovation, Intelligence, and Imagination
   image:
     file: ../../assets/houston.webp
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: Enter Narrative
+      link: /intro/
       icon: right-arrow
       variant: primary
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+    - text: Contribute on github
+      link: https://github.com/iqbalamo93/NeuralNarrative/
       icon: external
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid ,LinkCard} from '@astrojs/starlight/components';
 
-## Next steps
+## Catalogue
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+
+	<Card title="Blogs" icon="pencil">
+		<LinkCard description = "Dive into my treasure trove of blog posts, where I unravel the mysteries of data and AI with a dash of geeky charm."
+		href="/blogs/intro-blog/"
+		/>
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+
+	<Card title="Books Review" icon="add-document">
+		<LinkCard description = "In the 'Books Review' section, we serve up bi-weekly reviews of tech and AI literature – it's like speed dating for your brain with the smartest books on the shelf!"
+		href="/books-review/intro-reviews/"
+		/>
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+	
+	<Card title="Faremework FastTrack" icon="setting">
+		<LinkCard description = "Framework FastTrack: Zipping through the bursting world of data-related frameworks, this section is your quick guide across the vast domains of data wizardry!"
+		href="/framework-fastrack/intro-fft/"
+		/>
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+
+	<Card title="Elements of NeuralNets" icon="open-book">
+		<LinkCard description = "A quick refresher on the foundational pieces that conjure the magic of AI. Perfect for grasping the basics that power neural networks and AI's wonders."
+		href="/elements-of-nn/intro-enn/"
+		/>
 	</Card>
 </CardGrid>
