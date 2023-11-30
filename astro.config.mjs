@@ -4,7 +4,6 @@ import remarkMath from 'remark-math';
 import rehypeMathJax from 'rehype-mathjax';
 import react from "@astrojs/react";
 
-import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
@@ -41,7 +40,5 @@ export default defineConfig({
         directory: 'framework-fastrack'
       }
     }]
-  }), react()],
-  output: "server",
-  adapter: vercel()
+  }), react()]
 });
