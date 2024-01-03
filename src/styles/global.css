@@ -1,0 +1,94 @@
+.content ul {
+    list-style-type: disc;
+}
+.fixed-image {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 20%; /* Example: width as a percentage of the viewport width */
+    z-index: 1000;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding-top: 11.25%;
+
+}
+
+
+
+.fixed-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 15px;
+}
+
+
+h2 {
+    position: relative;
+    padding-right: 20px; /* Adjust padding to fit the gradient border */
+    border-right: 3px solid transparent; /* Initial border set to transparent */
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent; /* Make the text color transparent to show the background */
+    transition: all 0.3s ease; /* Smooth transition for the border and text color */
+  }
+  
+  h2::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(to bottom, #ffa500, #ff4500); /* Gradient from orange to red-orange */
+    transition: width 0.3s ease; /* Transition for the 'after' pseudo-element */
+  }
+  
+  h2:hover {
+    background: linear-gradient(45deg, #f3ec78, #af4261);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; /* This makes the text itself transparent, showing the gradient background */
+}
+
+  
+  h2:hover::after {
+    width: 3px; /* Width of the right border on hover */
+  }
+  h1:hover {
+    background: linear-gradient(45deg, #f5f5dc, #deb887); /* Two shades of beige */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; /* This makes the text itself transparent, showing the gradient background */
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: black; }
+  }
+  
+  h1 {
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: 0.15em solid black; /* The typewriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Center the heading */
+    letter-spacing: 0.15em; /* Adjust letter spacing */
+    animation: 
+      typing 3.5s steps(30, end),
+      blink-caret 0.75s step-end infinite;
+  }
+  
+  /* Optional: Adjust font and size */
+  h1{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2em;
+  }
+  .hero {
+    padding-top: 0;
+}

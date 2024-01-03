@@ -4,6 +4,7 @@ import remarkMath from 'remark-math';
 import rehypeMathJax from 'rehype-mathjax';
 import react from "@astrojs/react";
 
+import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
@@ -40,5 +41,5 @@ export default defineConfig({
         directory: 'framework-fastrack'
       }
     }]
-  }), react()]
+  }), react(), tailwind()]
 });
