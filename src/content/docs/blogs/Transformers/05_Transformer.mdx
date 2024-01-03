@@ -37,6 +37,7 @@ Within our `model.py`, we've crafted a robust framework composed of nine classes
 - [Decoder](#decoder)
 - [Projection Layer](#projection-layer)
 - [Transformer](#transformer)
+- [Build Transformer](#build-transformer)
 
 The function buildTransformer weaves these components together, initializing the architecture for our model.
 
@@ -351,31 +352,404 @@ The design of the `ResidualConnection` class exemplifies key principles in build
 </Fragment>
 
 <Fragment>
-  <h2 id="encoder-block">Encoder Block</h2>
-  {/* TODO: Add initialization parameters, forward method, and comments here */}
+## Encoder Block
+```python
+class EncoderBlock(nn.Module):
+    def __init__(self, self_attention_block: MultiHeadAttentionBlock, feed_forward_block: FeedForwardBlock, dropout:float):
+        super().__init__()
+        self.self_attention_block = self_attention_block
+        self.feed_forward_block = feed_forward_block
+        self.residual_connection = nn.ModuleList([ResidualConnection(dropout) for _ in range(2)])
+
+    def forward(self, x, src_mask):
+        x = self.residual_connection[0](x, lambda x:self.self_attention_block(x,x,x, src_mask))
+        x = self.residual_connection[1](x, self.feed_forward_block)
+
+        return x
+```
+The `EncoderBlock` is a fundamental unit within the transformer's encoder architecture. It encapsulates the mechanism of self-attention and feed-forward layers, essential for processing the input sequence. Here's a breakdown of its structure and functionality:
+
+- **Constructor (`__init__` method)**
+  - The encoder block is initialized with key components of the transformer:
+    - `self_attention_block` (`MultiHeadAttentionBlock`): Handles the self-attention mechanism, allowing the model to weigh the importance of different parts of the input sequence.
+    - `feed_forward_block` (`FeedForwardBlock`): A feed-forward neural network that processes the output of the attention layer.
+    - `dropout` (float): The dropout rate used for regularization.
+
+  Within the constructor:
+  
+  - The encoder block holds instances of the `self_attention_block` and `feed_forward_block`, representing the core functional units of the block.
+  - `self.residual_connection` is a list of two `ResidualConnection` modules. These are used to implement the residual connections around the self-attention and feed-forward blocks, a key feature in the transformer architecture for efficient training and gradient flow.
+
+- **Forward Method (`forward` method)**
+  - The forward pass of the encoder block involves two main steps:
+    - Applying the self-attention mechanism to the input `x` with an optional source mask `src_mask`. The output then passes through the first residual connection.
+    - Feeding the output of the first step through the feed-forward block, followed by the second residual connection.
+
+  In action:
+  
+  - The `lambda` function in the first residual connection allows for the application of the self-attention block to the normalized input.
+  - The second residual connection wraps around the feed-forward block, ensuring the addition of the original input to the output of the feed-forward layer.
+
+**Important Points:**
+
+- The `EncoderBlock` is designed to process each element in the input sequence while considering the entire sequence, a fundamental characteristic enabled by self-attention.
+- The use of residual connections around both the self-attention and feed-forward layers is crucial for the model's deep learning capability, allowing gradients to flow through the network more effectively.
+- This class highlights the modular design of transformers, where each block is responsible for specific tasks (self-attention and feed-forward computation), and is combined in a manner that allows for complex sequence processing.
+
+The `EncoderBlock` class embodies the principles of self-attention and feed-forward processing in a manner that is quintessential to the transformer's ability to handle sequential data effectively.
+
 </Fragment>
 
 <Fragment>
-  <h2 id="encoder">Encoder</h2>
-  {/* TODO: Add initialization parameters, forward method, and comments here */}
+## Encoder
+```python
+class Encoder(nn.Module):
+    def __init__(self, layers: nn.ModuleList) -> None:
+        super().__init__()
+        self.layers = layers
+        self.norm = LayerNormalization()
+    
+    def forward(self,x, mask):
+        for layer in self.layers:
+            x = layer(x,mask)
+
+        return self.norm(x)
+```
+The `Encoder` forms a central part of the transformer architecture, orchestrating the sequential application of multiple encoder layers to process the input sequence. Its implementation is straightforward yet crucial for the transformer's functionality. Here's an overview:
+
+- **Constructor (`__init__` method)**
+  - The encoder is initialized with a `ModuleList` of encoder layers:
+    - `layers` (`nn.ModuleList`): A list of encoder layers (instances of `EncoderBlock`). This modular approach allows for flexibility in the number of layers and their composition.
+
+  In the constructor:
+  
+  - `self.layers` holds the series of encoder blocks that will process the input data sequentially.
+  - `self.norm` is an instance of `LayerNormalization`, applied to the output of the last encoder layer for normalization.
+
+- **Forward Method (`forward` method)**
+  - In the forward pass, the encoder iteratively processes the input `x` through each encoder layer in the `self.layers` list, using the provided `mask`:
+    - The `mask` is typically used for masking out padding tokens in the input sequence.
+    - Each layer in `self.layers` receives the input `x` and the `mask`, and its output is fed into the next layer in the sequence.
+
+  The significance of the loop:
+  
+  - The use of a `for` loop to iterate over the layers allows each layer to transform the input based on the output of the previous layer, enabling deep processing of the sequence.
+  - This sequential processing is key to the encoder's ability to build complex representations of the input data.
+
+- **Post-Layer Normalization**
+  - After processing the input through all the encoder layers, the output undergoes layer normalization via `self.norm`. This step is crucial for stabilizing the output before it's passed on to the next stage of the transformer model.
+
+**Important Points:**
+
+- The `Encoder` serves as a pipeline, directing the input through a series of self-attention and feed-forward computations, each encapsulated within an `EncoderBlock`.
+- The modular design, with a `ModuleList` of `EncoderBlock`s, allows for custom configurations of the encoder, catering to different depths and complexities.
+- The final layer normalization is a vital step, ensuring that the encoder's output is normalized and suitable for subsequent processing or for output generation.
+
+In essence, the `Encoder` class demonstrates the transformer's capacity for sequential data processing, showcasing the depth and complexity achievable through stacking multiple encoder layers.
+
 </Fragment>
 
 <Fragment>
-  <h2 id="decoder-block">Decoder Block</h2>
-  {/* TODO: Add initialization parameters, forward method, and comments here */}
+  ## Decoder Block
+```python
+class DecoderBlock(nn.Module):
+    def __init__(self, self_attention_block:MultiHeadAttentionBlock, cross_attention_Block: MultiHeadAttentionBlock,
+                    feed_forward_block:FeedForwardBlock, dropout: float):
+        super().__init__()
+        self.self_attention_block = self_attention_block
+        self.cross_attention_Block = cross_attention_Block
+        self.feed_forward_block = feed_forward_block
+
+        self.residual_connections = nn.ModuleList([ResidualConnection(dropout) for _ in range(3)])
+
+    def forward(self, x, encoder_output, src_mask, tgt_mask):
+
+        x = self.residual_connections[0](x, lambda x: self.self_attention_block(x,x,x,tgt_mask))
+        x = self.residual_connections[1](x, lambda x: self.self_attention_block(x,encoder_output,encoder_output,src_mask))
+        x = self.residual_connections[2](x, self.feed_forward_block)
+
+        return x
+```
+The `DecoderBlock` is a vital component of the transformer's decoder architecture. It integrates self-attention, cross-attention, and feed-forward networks, playing a critical role in processing and generating the output sequence. Here's a breakdown of its structure and functionality:
+
+- **Constructor (`__init__` method)**
+  - The `DecoderBlock` is initialized with distinct elements for the decoding process:
+    - `self_attention_block` (`MultiHeadAttentionBlock`): Handles the self-attention mechanism within the decoder, focusing on the positions up to and including the current position in the output sequence.
+    - `cross_attention_Block` (`MultiHeadAttentionBlock`): Manages cross-attention, where the decoder attends to the encoder's output.
+    - `feed_forward_block` (`FeedForwardBlock`): A feed-forward neural network that processes the data after attention mechanisms.
+    - `dropout` (float): The dropout rate for regularization.
+
+  Inside the constructor:
+  
+  - Three instances of `ResidualConnection` are created and stored in `self.residual_connections`. These wrap around each of the main components: the two attention blocks and the feed-forward block.
+
+- **Forward Method (`forward` method)**
+  - The forward pass of the `DecoderBlock` takes four arguments:
+    - `x`: The input to the decoder block.
+    - `encoder_output`: The output from the encoder, used in cross-attention.
+    - `src_mask`: The source mask for masking the encoder's output.
+    - `tgt_mask`: The target mask for masking the current decoder output.
+
+  Processing steps:
+  
+  - First, `x` passes through the self-attention mechanism with a target mask (`tgt_mask`). This is followed by the first residual connection.
+  - Then, `x` is processed by the cross-attention block, attending to `encoder_output` with a source mask (`src_mask`). This goes through the second residual connection.
+  - Finally, the output is fed through the feed-forward block and the last residual connection.
+
+**Important Points:**
+
+- The sequential application of self-attention, cross-attention, and feed-forward networks allows the decoder to effectively generate each part of the output sequence by considering both its own previous outputs and the encoder's output.
+- The use of residual connections around each component helps maintain the flow of gradients and preserves information throughout the depth of the decoder.
+- The `DecoderBlock` demonstrates the transformer's ability to integrate information from the encoder while generating the output sequence, a key feature that enables its success in sequence-to-sequence tasks.
+
+The design of the `DecoderBlock` reflects the sophisticated nature of the transformer model, where each component plays a specific role in processing the sequential data and generating accurate and coherent outputs.
+
 </Fragment>
 
 <Fragment>
-  <h2 id="decoder">Decoder</h2>
-  {/* TODO: Add initialization parameters, forward method, and comments here */}
+## Decoder
+```python
+class Decoder(nn.Module):
+
+    def __init__(self, layers: nn.ModuleList) -> None:
+        super().__init__()
+
+        self.layers = layers
+        self.norm = LayerNormalization()
+
+    def forward(self, x, encoder_output, src_mask, tgt_mask):
+        for layer in self.layers:
+            x = layer(x, encoder_output, src_mask, tgt_mask)
+        
+        return self.norm(x)
+```
+The `Decoder` in the transformer architecture is crucial for generating the output sequence based on the encoded input. It is intricately designed to consider both the encoder's output and its own output up to the current position. Here's a detailed look:
+
+- **Constructor (`__init__` method)**
+  - The constructor initializes the `Decoder` with a `ModuleList` of `DecoderBlock` layers:
+    - `layers` (`nn.ModuleList`): Contains a sequence of `DecoderBlock` instances. This allows the decoder to be composed of multiple layers, enhancing its ability to model complex relationships.
+
+  Inside the constructor:
+  
+  - `self.layers` holds the series of `DecoderBlock`s that process the input data sequentially.
+  - `self.norm` is an instance of `LayerNormalization`, used to normalize the output of the last decoder layer.
+
+- **Forward Method (`forward` method)**
+  - The forward pass of the decoder involves several key operations:
+    - `x`: The current output sequence being generated.
+    - `encoder_output`: The output from the encoder.
+    - `src_mask`: A mask applied to the encoder output (useful for masking out padding tokens in source).
+    - `tgt_mask`: A target mask that ensures the decoder only attends to earlier positions in the sequence, preventing it from seeing future tokens.
+
+  Processing steps:
+  - The input `x` is passed through each `DecoderBlock` in the `self.layers` list, along with `encoder_output`, `src_mask`, and `tgt_mask`. 
+  - The `for` loop ensures each layer processes the sequence based on the output of the previous layer, allowing for deep sequential processing.
+
+**Important Points:**
+
+- **Masking in the Decoder/Decoder block**: The target mask (`tgt_mask`) is essential in the decoder. It prevents the decoder from having information about the next word in the sequence, ensuring that each output token is generated based only on the previous tokens. This is crucial for tasks like language modeling and machine translation.
+- **Residual Connections**: Each `DecoderBlock` includes residual connections (similar to the encoder), facilitating the training of deep networks by allowing gradient flow.
+- **Layer Normalization**: After all decoder layers have processed the input, `self.norm` is applied, normalizing the output for consistent scale and variance. 
+
+The `Decoder` class encapsulates the transformer's ability to generate coherent and contextually appropriate sequences by carefully combining self-attention with the context provided by the encoder's output.
+
 </Fragment>
 
 <Fragment>
-  <h2 id="projection-layer">Projection Layer</h2>
-  {/* TODO: Add initialization parameters, forward method, and comments here */}
+## Projection Layer
+```python
+class ProjectionLayer(nn.ModuleList):
+
+    def __init__(self, d_model:int, vocal_size:int ) -> None:
+        super().__init__()
+        self.proj = nn.Linear(d_model, vocal_size)
+
+    def forward(self, x):
+        #(Batch, Seq_Len, d_model) --> (Batch, Seq_Len, Vocab_Size)
+        return torch.log_softmax(self.proj(x),dim=-1)
+```
+The `ProjectionLayer` in the Transformer model plays a crucial role in translating the high-dimensional output of the decoder into a probability distribution over the vocabulary. This layer is pivotal for tasks like language generation. Here's an overview:
+
+- **Constructor (`__init__` method)**
+  - The `ProjectionLayer` is initialized with the following parameters:
+    - `d_model` (int): The dimensionality of the input feature space, typically the same as the model's internal representation size.
+    - `vocab_size` (int): The size of the output vocabulary.
+
+  In the constructor:
+  
+  - `self.proj` is an instance of `nn.Linear`, which is a fully connected linear layer. It projects the input from the `d_model`-dimensional space to the `vocab_size`-dimensional space.
+
+- **Forward Method (`forward` method)**
+  - The forward pass of the `ProjectionLayer` takes the input `x` and performs the following operations:
+    - First, the input `x` is passed through the linear projection layer (`self.proj(x)`). This step transforms the input from the decoder's output dimensionality to the vocabulary dimensionality.
+    - Then, a logarithmic softmax function is applied to the output of the linear layer. This step converts the linear outputs into a log probability distribution over the vocabulary.
+
+  The significance of log softmax:
+  
+  - The use of the log softmax function is essential for transforming the raw output of the linear layer into a probability distribution.
+  - Log softmax provides numerical stability compared to the regular softmax function, especially when dealing with large vocabularies or extreme values.
+  - It computes the logarithm of the softmax function, which is useful for calculating the loss during training, especially in tasks like language modeling and machine translation.
+
+**Important Points:**
+
+- The `ProjectionLayer` serves as the final step in the Transformer model's output generation, converting the complex representations learned by the model into a format that directly corresponds to the probability of each word in the vocabulary.
+- This layer is crucial for tasks where the model needs to choose the next word or token, as it provides a clear and probabilistically interpretable output.
+- The transition from high-dimensional space to vocabulary space, followed by the application of log softmax, encapsulates the process of transforming abstract representations into concrete linguistic elements.
+
+The `ProjectionLayer` exemplifies the Transformer's capability to not only process and understand language but also to generate it in a probabilistically sound manner.
 </Fragment>
 
 <Fragment>
-  <h2 id="transformer">Transformer</h2>
-  {/* TODO: Add initialization parameters, forward method, and comments here */}
+## Transformer
+```python
+class Transformer(nn.Module):
+
+    def __init__(self, encoder:Encoder, decoder: Decoder, src_embed: InputEmbeddings,
+                 tgt_embed: InputEmbeddings, src_pos: PositionalEncoding, tgt_pos: PositionalEncoding, 
+                 Projection_Layer: ProjectionLayer)-> None:
+        super().__init__()
+        self.encoder = encoder
+        self.decoder = decoder
+        self.src_emded = src_embed
+        self.tgt_embed = tgt_embed
+        self.src_pos = src_pos
+        self.tgt_pos = tgt_pos
+        self.projection_layer = Projection_Layer
+
+    def encode(self, src, src_mask):
+        src = self.src_emded(src)
+        src = self.src_pos(src)
+
+        return self.encoder(src, src_mask)
+    
+    def decode(self, encoder_output, src_mask, tgt, tgt_mask):
+        tgt = self.tgt_embed(tgt)
+        tgt = self.tgt_pos(tgt)
+        return self.decoder(tgt, encoder_output, src_mask, tgt_mask)
+
+    def project(self, x):
+
+        return self.projection_layer(x)
+```
+The `Transformer` class is the culmination of the various components of the Transformer model, orchestrating the entire sequence-to-sequence process. This class combines the encoder, decoder, embedding layers, positional encodings, and the projection layer into a cohesive unit. Here's a detailed look:
+
+- **Constructor (`__init__` method)**
+  - The `Transformer` class is initialized with all the essential components of the transformer architecture:
+    - `encoder` (`Encoder`): The encoder part of the transformer.
+    - `decoder` (`Decoder`): The decoder part of the transformer.
+    - `src_embed` and `tgt_embed` (`InputEmbeddings`): Embedding layers for the source and target sequences, respectively.
+    - `src_pos` and `tgt_pos` (`PositionalEncoding`): Positional encoding layers for the source and target.
+    - `Projection_Layer` (`ProjectionLayer`): The final projection layer that maps the decoder's output to the output vocabulary.
+
+  In the constructor:
+  - Each component is assigned to an instance variable, allowing the transformer to access and use these components in the encoding, decoding, and projection processes.
+- **Encode Method (`encode` method)**
+  - Handles the encoding of the source sequence:
+    - Applies the source embeddings and positional encoding to the input source sequence.
+    - Passes the processed input through the encoder, along with a source mask if provided.
+
+ **Decode Method (`decode` method)**  
+Manages the decoding process based on the encoder's output:  
+Applies target embeddings and positional encoding to the target sequence.  
+Processes the target sequence through the decoder, using the encoder output and both source and target masks.
+
+- **Project Method (`project` method)**
+  - Applies the projection layer to the decoder's output:
+    - This function is typically used during inference to obtain the final output predictions.
+
+**Important Points:**
+
+- The `Transformer` class effectively integrates the separate components into a unified model, showcasing the power of the transformer architecture in handling sequence-to-sequence tasks.
+- The encode-decode-project workflow encapsulates the transformer's process: encoding the input, decoding for the target, and projecting the output to a usable format.
+- The separation of encode, decode, and project functions aligns with the model's use during inference, where each step plays a distinct role in generating the final output.
+
+This class is the heart of the Transformer model, tying together all the specialized components and enabling the model to perform complex tasks in natural language processing, such as machine translation and text generation.
+</Fragment>
+
+<Fragment>
+## Build transformer : Function
+```python
+def build_transformer(src_vocab_size: int, tgt_vocab_size: int,
+                      src_seq_len: int, tgt_seq_len: int, d_model:int = 512,
+                      N: int = 6 , h: int = 8, dropout: float = 0.1, d_ff: int = 2048 )->Transformer:
+    # create the embeddings
+    
+    src_embed = InputEmbeddings(d_model, src_vocab_size)
+    tgt_embed = InputEmbeddings(d_model, tgt_vocab_size)
+
+    #Create the positional encoding layer
+    src_pos = PositionalEncoding(d_model, src_seq_len, dropout)
+    tgt_pos = PositionalEncoding(d_model, tgt_seq_len, dropout)
+
+    encoder_blocks = []
+    for _ in range(6):
+
+        encoder_self_attention_block = MultiHeadAttentionBlock(d_model, h, dropout)
+        feed_forward_block = FeedForwardBlock(d_model, d_ff, dropout)
+        encoder_block = EncoderBlock(encoder_self_attention_block, feed_forward_block, dropout)
+        encoder_blocks.append(encoder_block)
+
+    #create the decoder blocks
+    
+    decorder_blocks = []
+
+    for _ in range(N):
+        decoder_self_attention_block = MultiHeadAttentionBlock(d_model, h, dropout)
+        decorder_cross_attention_block = MultiHeadAttentionBlock(d_model, h, dropout)
+
+        feed_forward_block = FeedForwardBlock(d_model, d_ff, dropout)
+        decoder_block = DecoderBlock(decoder_self_attention_block, decorder_cross_attention_block, feed_forward_block, dropout)
+
+        decorder_blocks.append(decoder_block)
+
+    encoder = Encoder(nn.ModuleList(encoder_blocks))
+    decorder = Decoder(nn.ModuleList(decorder_blocks))
+
+    # create the projection layer
+    projection_layer = ProjectionLayer(d_model, tgt_vocab_size)
+
+    #crate the transformer
+    transformer = Transformer(encoder, decorder, src_embed, tgt_embed, src_pos, tgt_pos, projection_layer)
+
+    #Initialize the parameters
+
+    for p in transformer.parameters():
+        if p.dim() >1:
+            nn.init.xavier_uniform_(p)
+
+    return transformer
+```
+The `build_transformer` function serves as a factory for creating a complete Transformer model. It integrates all the components we've discussed into a functional unit. Here's an overview of its process:
+
+- **Parameters**: 
+  - Accepts various hyperparameters such as `src_vocab_size`, `tgt_vocab_size`, `src_seq_len`, `tgt_seq_len`, `d_model`, `N` (number of layers), `h` (number of heads in multi-head attention), `dropout`, and `d_ff` (dimension of feed-forward network).
+  
+- **Embedding Layers**: 
+  - Initializes embedding layers for both the source (`src_embed`) and target (`tgt_embed`) sequences.
+
+- **Positional Encoding Layers**: 
+  - Creates positional encoding layers for both the source (`src_pos`) and target (`tgt_pos`) with dropout.
+
+- **Encoder and Decoder Blocks**: 
+  - Constructs multiple `EncoderBlock` and `DecoderBlock` instances, forming the core of the encoder and decoder respectively. The number of blocks is determined by the `N` parameter.
+
+- **Assembly of Encoder and Decoder**: 
+  - The encoder and decoder blocks are assembled into `Encoder` and `Decoder` modules using `nn.ModuleList`.
+
+- **Projection Layer**: 
+  - A `ProjectionLayer` is initialized to map the decoder's output to the target vocabulary space.
+
+- **Creation of Transformer Model**: 
+  - The `Transformer` class is instantiated with the encoder, decoder, embeddings, positional encodings, and projection layer.
+
+- **Parameter Initialization**:
+  - The model's parameters are initialized using the Xavier uniform initialization method. This is a common practice for initializing neural network weights as it can help prevent vanishing or exploding gradients, especially in deep networks like the Transformer.
+
+**Final Notes**:
+
+- This function encapsulates the entire process of building a Transformer model, demonstrating the modular nature of its architecture.
+- With the model now built, the next steps involve training it on a specific task (like translation or text generation) and then using it for inference.
+
+By the end of this function, we have a fully assembled Transformer model, ready for training and subsequent inference tasks.
+
 </Fragment>
