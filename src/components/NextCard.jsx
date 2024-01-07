@@ -1,23 +1,147 @@
 import React from "react";
 import {Card, CardHeader, CardBody, Image} from "@nextui-org/react";
 
+import './Nextcard.css'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
+
 export default function App() {
   return (
-    <a href="./blogs/transformers/05_transformer">
-    <Card className="max-w-xs"> {/* Adjust width, remove centering */}
-      <CardHeader className="px-4 flex-col items-start">
-        <p className="text-tiny uppercase font-bold">Recent Article</p>
-        <h4 className="font-bold text-large">Transformers</h4>
-      </CardHeader>
-      <CardBody className="overflow-visible ">
-        <Image
-          alt="Card background"
-          className="object-cover rounded-xl"
-          src='https://image.lexica.art/full_webp/22ac94c2-86aa-4690-9bd3-147e0a8fbb2c'
-          width={270}
-        />
-      </CardBody>
-    </Card>
-  </a>
+
+    <Carousel className="w-full custom-carousel"   >
+
+      <CarouselContent className="flex items-center custom-carousel-content">
+
+      <CarouselItem className="pb-0 flex-none">
+        <a href="./blogs/transformers/05_transformer">
+          <Card className="max-w-xs ">
+            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-tiny uppercase font-bold">Recent Article</p>
+              <small className="text-default-500">Code</small>
+              <h4>Transformer</h4>
+            </CardHeader>
+            <CardBody className="overflow-visible ">
+              <Image 
+                alt="Card background"
+                className="object-cover rounded-xl"
+                src='https://image.lexica.art/full_webp/22ac94c2-86aa-4690-9bd3-147e0a8fbb2c'
+                width={200}
+              />
+            </CardBody>
+          </Card>
+        </a>
+      </CarouselItem>
+        <CarouselItem className="pb-0 flex-none">
+        <a href="./blogs/transformers/05_transformer">
+          <Card className="max-w-xs ">
+            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-tiny uppercase font-bold">Recent Article</p>
+              <small className="text-default-500">Code</small>
+              <h4 className="font-bold text-large">Quantisation</h4>
+            </CardHeader>
+            <CardBody className="overflow-visible ">
+              <Image 
+                alt="Card background"
+                className="object-cover rounded-xl"
+                src='https://image.lexica.art/full_webp/22ac94c2-86aa-4690-9bd3-147e0a8fbb2c'
+                width={200}
+              />
+            </CardBody>
+          </Card>
+        </a>
+      </CarouselItem>
+
+        <CarouselItem className="pb-0 flex-none">
+        <a href="./blogs/transformers/05_transformer">
+          <Card className="max-w-xs ">
+            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-tiny uppercase font-bold">Recent Article</p>
+              <small className="text-default-500">Code</small>
+              <h4 className="font-bold text-large">Three</h4>
+            </CardHeader>
+            <CardBody className="overflow-visible ">
+              <Image 
+                alt="Card background"
+                className="object-cover rounded-xl"
+                src='https://image.lexica.art/full_webp/22ac94c2-86aa-4690-9bd3-147e0a8fbb2c'
+                width={200}
+              />
+            </CardBody>
+          </Card>
+        </a>
+      </CarouselItem>
+
+      <CarouselItem className="pb-0 flex-none">
+        <a href="./blogs/transformers/05_transformer">
+          <Card className="max-w-xs ">
+            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-tiny uppercase font-bold">Recent Article</p>
+              <small className="text-default-500">Code</small>
+              <h4 className="font-bold text-large">Four</h4>
+            </CardHeader>
+            <CardBody className="overflow-visible ">
+              <Image 
+                alt="Card background"
+                className="object-cover rounded-xl"
+                src='https://image.lexica.art/full_webp/22ac94c2-86aa-4690-9bd3-147e0a8fbb2c'
+                width={200}
+              />
+            </CardBody>
+          </Card>
+        </a>
+      </CarouselItem>
+
+      <CarouselItem className="pb-0 flex-none">
+        <a href="./blogs/transformers/05_transformer">
+          <Card className="max-w-xs ">
+            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-tiny uppercase font-bold">Recent Article</p>
+              <small className="text-default-500">Code</small>
+              <h4 className="p-0 m-0 font-bold text-large">Five</h4>
+            </CardHeader>
+            <CardBody className="overflow-visible ">
+              <Image 
+                alt="Card background"
+                className="object-cover rounded-xl"
+                src='https://image.lexica.art/full_webp/22ac94c2-86aa-4690-9bd3-147e0a8fbb2c'
+                width={200}
+              />
+            </CardBody>
+          </Card>
+        </a>
+      </CarouselItem>
+
+      <CarouselItem className="pb-0 flex-none">
+        <a href="./blogs/transformers/05_transformer">
+          <Card className="max-w-xs ">
+            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-tiny uppercase font-bold">Recent Article</p>
+              <small className="text-default-500">Code</small>
+              <h4 className="p-0 m-0 font-bold text-large">six</h4>
+            </CardHeader>
+            <CardBody className="overflow-visible ">
+              <Image 
+                alt="Card background"
+                className="object-cover rounded-xl"
+                src='https://image.lexica.art/full_webp/22ac94c2-86aa-4690-9bd3-147e0a8fbb2c'
+                width={200}
+              />
+            </CardBody>
+          </Card>
+        </a>
+      </CarouselItem>
+
+
+      </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+  </Carousel>
+
   )
 }

@@ -5,6 +5,7 @@ description: A guide in my new Starlight docs site.
 
 import '../../../../styles/global.css';  
 import myImage from "./transformer.png";
+import pe from './pe.png'
 import React from 'react';
 import Draggable from 'react-draggable';
 import ff_image from "./ff.png";
@@ -74,6 +75,13 @@ class InputEmbeddings(nn.Module):
 
 <Fragment>
 ## Positional Encoding
+
+The `PositionalEncoding` is designed to provide each token in a sequence with a unique position encoding. 
+Consider this example:
+<div class="pe">
+    <Image src={pe}  alt="A description of my image." />
+</div>
+In the sentence `'I love watching birds'`, the word `'I'` is at position 0, and the word 'birds' is at position 3. Each word is converted into a vector representation with a dimension of d_model(This is from embeddings layer). Positional encoding adds positional information to each vector. This is achieved by using a 'pos' attribute, where the even positions in the vector receive a sine function value, and the odd positions receive a cosine function value, as illustrated below
 ```python
 class PositionalEncoding(nn.Module):
 
@@ -97,7 +105,6 @@ class PositionalEncoding(nn.Module):
 
         return self.dropout(x)
 ```
-The `PositionalEncoding` class extends `nn.Module` and is designed to provide each token in a sequence with a unique position encoding. Here's a breakdown of its implementation and purpose:
 
 - **Constructor (`__init__` method)**
   - Initializes the positional encoding with the following parameters:

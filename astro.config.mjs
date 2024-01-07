@@ -41,5 +41,8 @@ export default defineConfig({
         directory: 'framework-fastrack'
       }
     }]
+  }),
+  tailwind({
+    applyBaseStyles: false,
   }), react(), tailwind()]
 });
