@@ -23,7 +23,7 @@ export default function ProjectsCard() {
 
                 <div class="card-author">
                 <a class="author-avatar" href="#">
-                    <img src="https://github.com/iqbalamo93/NeuralNarrative/blob/main/img.png" />
+                    <img src="https://image.lexica.art/full_webp/06bb677b-5666-4f10-b941-150b3e89118f" />
                 </a>
                 <svg class="half-circle" viewBox="0 0 106 57">
                     <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
