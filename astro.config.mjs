@@ -44,5 +44,5 @@ export default defineConfig({
   }),
   tailwind({
     applyBaseStyles: false,
-  }), react(), tailwind()]
+  }),react(), tailwind()]
 });
