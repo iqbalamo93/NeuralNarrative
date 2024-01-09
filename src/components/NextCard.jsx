@@ -69,7 +69,7 @@ export default function App() {
               <Image 
                 alt="Card background"
                 className="object-cover rounded-xl"
-                src='https://image.lexica.art/full_webp/22ac94c2-86aa-4690-9bd3-147e0a8fbb2c'
+                src='https://image.lexica.art/full_webp/dd124f91-946f-41c8-9680-0c2c0fe73505'
                 width={200}
               />
             </CardBody>
