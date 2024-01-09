@@ -5,3 +5,7 @@
 .custom-carousel * {
     margin-top: 0 !important;
   }
+
+  html {
+    scroll-behavior: smooth;
+}

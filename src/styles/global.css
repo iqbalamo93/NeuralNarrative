@@ -31,7 +31,7 @@ h2 {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent; /* Make the text color transparent to show the background */
-    transition: all 0.3s ease; /* Smooth transition for the border and text color */
+    transition: all 0.3s ease;/* Smooth transition for the border and text color */
   }
   
   h2::after {
@@ -79,9 +79,9 @@ h2 {
     white-space: nowrap; /* Keeps the content on a single line */
     margin: 0 auto; /* Center the heading */
     letter-spacing: 0.15em; /* Adjust letter spacing */
-    animation: 
+    /* animation: 
       typing 3.5s steps(30, end),
-      blink-caret 0.75s step-end infinite;
+      blink-caret 0.75s step-end infinite; */
   }
   
   /* Optional: Adjust font and size */

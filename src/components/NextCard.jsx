@@ -42,7 +42,7 @@ export default function App() {
           <Card className="max-w-xs ">
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
               <p className="text-tiny uppercase font-bold">Recent Article</p>
-              <small className="text-default-500">Code</small>
+              <small className="text-default-500">writeup</small>
               <h4 className="font-bold text-large">Quantisation</h4>
             </CardHeader>
             <CardBody className="overflow-visible ">
@@ -57,13 +57,13 @@ export default function App() {
         </a>
       </CarouselItem>
 
-        <CarouselItem className="pb-0 flex-none">
-        <a href="./blogs/transformers/05_transformer">
+      <CarouselItem className="pb-0 flex-none">
+        <a href="#project">
           <Card className="max-w-xs ">
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-              <p className="text-tiny uppercase font-bold">Recent Article</p>
-              <small className="text-default-500">Code</small>
-              <h4 className="font-bold text-large">Three</h4>
+              <p className="text-tiny uppercase font-bold">Other works</p>
+              <small className="text-default-500">Code and play</small>
+              <h4 className="font-bold text-large">Projects</h4>
             </CardHeader>
             <CardBody className="overflow-visible ">
               <Image 
