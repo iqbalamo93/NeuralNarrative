@@ -41,8 +41,6 @@ export default function ProjectsCard() {
                 <a href="#">Langchain</a>
                 <a href="#">streamlit</a>
                 </div>
-
-
             </article><a/>
 
 
@@ -50,7 +48,9 @@ export default function ProjectsCard() {
             <article class="card-proj">
                 <header class="card-header">
                 <p>Jan 09th 2024</p>
-                <h2>Youtube summarizer!</h2>
+                <a href='https://summarizetubeai.streamlit.app/'>
+                    <h2>Youtube summarizer!</h2>
+                </a>
                 </header>
 
                 <div class="card-author">
