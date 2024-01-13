@@ -43,13 +43,13 @@ export default function App() {
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
               <p className="text-tiny uppercase font-bold">Recent Article</p>
               <small className="text-default-500">writeup</small>
-              <h4 className="font-bold text-large">Quantisation</h4>
+              <h4 className="font-bold text-large">Quantization</h4>
             </CardHeader>
             <CardBody className="overflow-visible ">
               <Image 
                 alt="Card background"
                 className="object-cover rounded-xl"
-                src='https://image.lexica.art/full_webp/22ac94c2-86aa-4690-9bd3-147e0a8fbb2c'
+                src='https://files.oaiusercontent.com/file-ih2Ulp4uoY2qqDlDcY8Z4UNy?se=2024-01-13T20%3A52%3A09Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D03c35322-6082-4e08-92b9-4c2599a8fe63.webp&sig=dke39xZnMR/Q3Wty7mj12hYM1zb9BzJqTIuFGFgX4pM%3D'
                 width={200}
               />
             </CardBody>
