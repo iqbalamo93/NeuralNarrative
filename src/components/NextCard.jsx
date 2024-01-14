@@ -38,7 +38,7 @@ export default function App() {
         </a>
       </CarouselItem>
         <CarouselItem className="pb-0 flex-none">
-        <a href="./blogs/transformers/05_transformer">
+        <a href="./blogs/quantization/intro">
           <Card className="max-w-xs ">
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
               <p className="text-tiny uppercase font-bold">Recent Article</p>
@@ -81,9 +81,29 @@ export default function App() {
         <a href="./blogs/transformers/05_transformer">
           <Card className="max-w-xs ">
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-tiny uppercase font-bold">AWS</p>
+              <small className="text-default-500">Code and MLops</small>
+              <h4 className="font-bold text-large">Orchestrating-AWS</h4>
+            </CardHeader>
+            <CardBody className="overflow-visible ">
+              <Image 
+                alt="Card background"
+                className="object-cover rounded-xl"
+                src='https://i.ibb.co/gS9TGhV/aws.png'
+                width={200}
+              />
+            </CardBody>
+          </Card>
+        </a>
+      </CarouselItem>
+
+      <CarouselItem className="pb-0 flex-none">
+        <a href="./blogs/transformers/05_transformer">
+          <Card className="max-w-xs ">
+            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
               <p className="text-tiny uppercase font-bold">Recent Article</p>
               <small className="text-default-500">Code</small>
-              <h4 className="font-bold text-large">Four</h4>
+              <h4 className="p-0 m-0 font-bold text-large">TBD</h4>
             </CardHeader>
             <CardBody className="overflow-visible ">
               <Image 
@@ -103,27 +123,7 @@ export default function App() {
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
               <p className="text-tiny uppercase font-bold">Recent Article</p>
               <small className="text-default-500">Code</small>
-              <h4 className="p-0 m-0 font-bold text-large">Five</h4>
-            </CardHeader>
-            <CardBody className="overflow-visible ">
-              <Image 
-                alt="Card background"
-                className="object-cover rounded-xl"
-                src='https://image.lexica.art/full_webp/22ac94c2-86aa-4690-9bd3-147e0a8fbb2c'
-                width={200}
-              />
-            </CardBody>
-          </Card>
-        </a>
-      </CarouselItem>
-
-      <CarouselItem className="pb-0 flex-none">
-        <a href="./blogs/transformers/05_transformer">
-          <Card className="max-w-xs ">
-            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-              <p className="text-tiny uppercase font-bold">Recent Article</p>
-              <small className="text-default-500">Code</small>
-              <h4 className="p-0 m-0 font-bold text-large">six</h4>
+              <h4 className="p-0 m-0 font-bold text-large">TBD</h4>
             </CardHeader>
             <CardBody className="overflow-visible ">
               <Image 
