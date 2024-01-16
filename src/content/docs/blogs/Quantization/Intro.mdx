@@ -2,6 +2,13 @@
 title: Qunatization-What,Why, and How...
 description: A guide in my new Starlight docs site.
 ---
+import { Image } from 'astro:assets';
+import quantized from "./quantized_1.png";
+import asymetric from './asymetric.png'; 
+import '../../../../styles/global.css';
+
+<article class='formatter'>
+
 Quantization is a critical concept in the fields of artificial intelligence (AI) and machine learning (ML), especially as these technologies continue to evolve. This article delves into what quantization is, its necessity, and its impact on AI and ML models.
 
 ## What is Quantization?
@@ -29,4 +36,88 @@ The need for quantization arises from several challenges associated with AI and 
 
 By addressing the challenges posed by the size and complexity of AI models, quantization serves as a key enabler for the more efficient and widespread use of AI and ML technologies.
 
+### Quick example
 
+Consider the example illustrated below, where we have a 4x4 weight matrix. These weights are initially stored as 32-bit floating-point numbers, which is a standard data type for such operations, consuming a total of 64 bytes. Our goal is to reduce this footprint while retaining as much of the original information as possible.
+
+<div class="click-zoom container " style={{ display: "flex", justifyContent: "center" }}>
+    <input type="checkbox" id="zoom_img"/>
+    <label for="zoom_img">
+    <Image className="" src={quantized} alt="A description of my image." />
+    </label> 
+</div>
+<details>
+    <summary>Click here to see code:</summary>
+
+```python
+# Your Python code goes here
+import torch
+
+w = [
+    [2.158,19.568,20.41,44.25],
+    [0.142,0.45,2.158,0.37],
+    [99.14,18.56,45.25,0.25],
+    [10.2,9.45,6.57,7.85]
+    ]
+w = torch.tensor(w)
+
+def asymmetric_quantization(weight_matrix, bits, target_dtype= torch.uint8):
+    alphas = (w.max(dim=-1)[0]).unsqueeze(1)
+    betas = (w.min(dim=-1)[0]).unsqueeze(1)
+    scale = (alphas - betas) / (2**bits-1)
+    zero = -1*torch.round(betas / scale)
+    lower_bound, upper_bound = 0, 2**bits-1
+
+    weight_matrix = torch.round(weight_matrix / scale + zero)
+    weight_matrix[weight_matrix < lower_bound] = lower_bound
+    weight_matrix[weight_matrix > upper_bound] = upper_bound
+
+    return weight_matrix.to(target_dtype), scale, zero
+
+def asym_dequant(weignt_matrix,scale,zero):
+
+    return (weignt_matrix-zero)*scale
+
+w_quant,scale,zero = asymmetric_quantization(w, 8)
+w_dequant = asym_dequant(w_quant, scale, zero)
+
+print('Original Matrix is: \n',w,'\n\n','Quantized Matrix is: \n',w_quant,'\n\n'\
+      'De-quantized is \n',w_dequant,'\n')
+
+original_size_in_bytes= w.numel()*w.element_size()
+Qunatized_size_in_bytes= w_quant.numel()*w_quant.element_size()
+
+print(f'Size before quantization: {original_size_in_bytes} \nSize after quantization: {Qunatized_size_in_bytes}')
+
+```
+
+</details>
+
+To achieve compression, we employ a quantization function that maps the original floating-point values to a specified range. In this case, we utilize an asymmetric quantization range of 0-255, corresponding to the `uint8` data type. This choice is strategic; an asymmetric range ensures that we can capture the full scope of values without resorting to a larger data type like `int32`, which would negate the size benefits.
+
+As a result, the quantized matrix holds values ranging from 0 to 255, and the total memory consumed is now only 16 bytes—a reduction to a quarter of the original size. Furthermore, by applying a dequantization function, we can translate these integers back into floating-point numbers. On the far right, we see the error matrix, comparing the original and dequantized values, with most discrepancies being imperceptibly close to zero.
+
+This example offers a succinct introduction to the process of quantization. We've explored the basics, and now it's time to delve deeper into the specific types within the broader category of Range-Based Linear Quantization—namely, asymmetric and symmetric quantization.
+##  Range-Based Linear Quantization
+<p >
+  <a href="#asymmetric">Asymmetric Quantization</a> <br/>
+  <a href="#symmetric">Symmetric Quantization</a>
+</p>
+### Asymmetric Quantization
+
+<a id="asymmetric"></a>
+In asymmetric quantization, we transform floating-point numbers or vectors from their original range, typically denoted as $[\beta, \alpha]$, into a new, narrower range defined by $[0, 2^n - 1]$. Here, $n$ represents the bit depth; $\beta$ is the minimum, and $\alpha$ is the maximum value within the array or vector. For example, in our prior discussion, we chose $n$ to be 8 because we worked with the uint8 data type, which spans 8 bits and covers a value range from 0 to 255.
+
+Let's examine the formula that facilitates this conversion from floating-point numbers to their quantized counterparts within the specified asymmetric range:
+
+<div  style={{ display: "flex", justifyContent: "center" }}>
+    <Image className="" src={asymetric} alt="A description of my image." /> 
+</div>
+
+### Symmetric Quantization
+<a id="symmetric"></a>
+Content for symmetric quantization...
+
+Beyond these, the field of quantization is rich with diverse methods, each suited to different scenarios and requirements. For instance, [DorEfa](https://intellabs.github.io/distiller/algo_quantization.html#dorefa) and [WRPN](https://intellabs.github.io/distiller/algo_quantization.html#wrpn) are two other notable techniques that have emerged, offering unique approaches to reducing model size and computational overhead. While our current discussion centers on Range-Based Linear Quantization, it's important to acknowledge these other methodologies as well. Future articles will delve into DorEfa and WRPN, providing a comprehensive understanding of the landscape of quantization in machine learning.
+
+</article>
