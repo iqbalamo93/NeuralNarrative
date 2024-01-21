@@ -3,8 +3,10 @@ import starlight from '@astrojs/starlight';
 import remarkMath from 'remark-math';
 import rehypeMathJax from 'rehype-mathjax';
 import react from "@astrojs/react";
-
 import tailwind from "@astrojs/tailwind";
+import markdoc from "@astrojs/markdoc";
+import  { Props } from '@astrojs/starlight/props';
+
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,7 +24,8 @@ export default defineConfig({
       autogenerate: {
         directory: 'blogs'
       }
-    }, {
+    }
+    , {
       label: 'Books Review',
       items: [
       // Each item here is one entry in the navigation menu.
@@ -41,8 +44,7 @@ export default defineConfig({
         directory: 'framework-fastrack'
       }
     }]
-  }),
-  tailwind({
-    applyBaseStyles: false,
-  }),react(), tailwind()]
+  }), tailwind({
+    applyBaseStyles: false
+  }), react(), tailwind(), markdoc()]
 });

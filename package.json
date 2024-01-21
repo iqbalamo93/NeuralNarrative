@@ -10,11 +10,11 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/markdoc": "^0.8.3",
     "@astrojs/react": "^3.0.6",
     "@astrojs/starlight": "^0.14.0",
     "@astrojs/starlight-tailwind": "^2.0.1",
     "@astrojs/tailwind": "^5.1.0",
-    "@astrojs/vercel": "^5.2.0",
     "@nextui-org/react": "^2.2.9",
     "@radix-ui/react-slot": "^1.0.2",
     "@tailwindcss/typography": "^0.5.10",
