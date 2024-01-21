@@ -4,7 +4,12 @@ dist/
 .astro/
 
 # dependencies
-node_modules/
+# node_modules/ olde
+
+node_modules/*
+
+# But do not ignore @astro.js
+!node_modules/@astro.js/
 
 # logs
 npm-debug.log*
