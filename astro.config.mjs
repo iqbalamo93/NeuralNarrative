@@ -7,7 +7,7 @@ import tailwind from "@astrojs/tailwind";
 import markdoc from "@astrojs/markdoc";
 import  { Props } from '@astrojs/starlight/props';
 
-const a = 125;
+
 // https://astro.build/config
 export default defineConfig({
   markdown: {
