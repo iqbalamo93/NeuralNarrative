@@ -1,11 +1,12 @@
 import { defineConfig } from 'astro/config';
-import starlight from '@astrojs/starlight';
+// import starlight from '@astrojs/starlight';
+import starlight from 'starlight-patch';
 import remarkMath from 'remark-math';
 import rehypeMathJax from 'rehype-mathjax';
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import markdoc from "@astrojs/markdoc";
-import  { Props } from '@astrojs/starlight/props';
+// import  { Props } from '@astrojs/starlight/props';
 
 
 // https://astro.build/config
