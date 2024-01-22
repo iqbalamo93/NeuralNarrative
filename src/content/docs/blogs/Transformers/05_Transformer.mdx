@@ -7,9 +7,9 @@ import '../../../../styles/global.css';
 import myImage from "./transformer.png";
 import pe from './pe.png'
 import React from 'react';
-import Draggable from 'react-draggable';
 import ff_image from "./ff.png";
 import { Image } from 'astro:assets';
+import  {FloatingImageWidget} from '../../../../components/FloatingImageWidget'
 
 #### Crafting the Transformer: An Object-Oriented Approach
 
@@ -18,11 +18,14 @@ In this section, we're going to construct a Transformer model from the ground up
 To bring the Transformer to life, we've broken down the development process into two primary segments: modeling and training. We'll start with modeling, which is crucial to grasp before we proceed to the training phase. As a constant guide, we've placed an image of the Transformer architecture in the right corner of the page for your reference.
 
 Within our `model.py`, we've crafted a robust framework composed of nine classes and one essential function. These components form the backbone of our implementation:
-<Draggable>
-<div class="fixed-image">
-    <Image src={myImage} width="300" alt="A description of my image." />
+
+<div align="center" class="click-zoom container transformer_image" style={{ display: "flex", justifyContent: "center" }}>
+    <input type="checkbox" id="zoom_img"/>
+    <label for="zoom_img">
+    <Image className="" src={myImage} alt="A description of my image." />
+    </label> 
 </div>
-</Draggable>
+
 
 ## Table of Contents
 

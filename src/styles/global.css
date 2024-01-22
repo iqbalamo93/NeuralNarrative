@@ -3,7 +3,7 @@
 }
 .fixed-image {
     position: fixed;
-    right: 0;
+    right: -1;
     bottom: 0;
     width: 20%; /* Example: width as a percentage of the viewport width */
     z-index: 1000;
@@ -11,18 +11,17 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     padding-top: 11.25%;
+    margin: 0; 
 
 }
 
 
-
 .fixed-image img {
-    width: 100%;
+    width: 50%;
     height: auto;
     display: block;
     border-radius: 15px;
 }
-
 
 h2 {
     position: relative;
@@ -120,4 +119,20 @@ input[type=checkbox]:checked ~ label > img
 
 .header{
   z-index:15;
+}
+
+
+
+.transformer_image {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center the image vertically */
+  z-index:100;
+}
+
+.transformer_image label {
+  cursor: pointer; /* Change cursor to indicate zoom action */
+  display: block;
+  max-width: 40%; /* Set the max width to 50% */
+  max-height: 40%; /* Set the max height to 50% */
 }
