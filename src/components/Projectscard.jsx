@@ -7,7 +7,7 @@ export default function ProjectsCard() {
     <div className='popular-articles' id='project'>
         
         <div className='popular-header header-card'>
-            <h2 class="header-card-title">
+            <h2 className="header-card-title">
             Explore<br/>Discover <br/><p>Peruse</p>
             </h2>
             <p className='tagline'>Scroll Right to View My Projects</p>
@@ -15,28 +15,29 @@ export default function ProjectsCard() {
 
         
 
-        <section class="card-list">
-            <article class="card-proj">
+        <section className="card-list mini-card-grid">
+
+            <article className="card-proj mini-card module module-article article">
                 <header class="card-header">
                 <p>Jan 08th 2024</p>
                 <a href="https://html-triscope.streamlit.app/"><h2>HTML TriScope</h2></a>
                 <p>Rapid Answers from Triple Web Sources</p>
                 </header>
 
-                <div class="card-author">
-                <a class="author-avatar" href="#">
+                <div className="card-author">
+                <a className="author-avatar" href="#">
                     <img src="https://image.lexica.art/full_webp/06bb677b-5666-4f10-b941-150b3e89118f" />
                 </a>
-                <svg class="half-circle" viewBox="0 0 106 57">
+                <svg className="half-circle" viewBox="0 0 106 57">
                     <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
                 </svg>
 
-                <div class="author-name">
-                    <div class="author-name-prefix">Author</div>
+                <div className="author-name">
+                    <div className="author-name-prefix">Author</div>
                     Iqbal Singh
                 </div>
                 </div>
-                <div class="tags">
+                <div className="tags">
                 <a href="#">LLM</a>
                 <a href="#">Langchain</a>
                 <a href="#">streamlit</a>
@@ -45,19 +46,19 @@ export default function ProjectsCard() {
 
 
 
-            <article class="card-proj">
-                <header class="card-header">
+            <article className="card-proj mini-card module module-article article">
+                <header className="card-header">
                 <p>Jan 09th 2024</p>
                 <a href='https://summarizetubeai.streamlit.app/'>
                     <h2>Youtube summarizer!</h2>
                 </a>
                 </header>
 
-                <div class="card-author">
-                <a class="author-avatar" href="#">
+                <div className="card-author">
+                <a className="author-avatar" href="#">
                     <img src="https://image.lexica.art/full_webp/06bb677b-5666-4f10-b941-150b3e89118f" />
                 </a>
-                <svg class="half-circle" viewBox="0 0 106 57">
+                <svg className="half-circle" viewBox="0 0 106 57">
                     <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
                 </svg>
 
@@ -75,7 +76,7 @@ export default function ProjectsCard() {
 
 
 
-            <article class="card-proj">
+            <article class="card-proj mini-card module module-article article">
                 <header class="card-header">
                 <p>Sep 11th 2023</p>
                 <h2>Tabular data Info extractor</h2>
@@ -100,7 +101,7 @@ export default function ProjectsCard() {
                 </div>
             </article>
 
-            <article class="card-proj">
+            <article class="card-proj mini-card module module-article article">
                 <header class="card-header">
                 <p>Jan 11th 2024</p>
                 <h2>Fine tune LLm: Coming Soon</h2>
@@ -126,7 +127,7 @@ export default function ProjectsCard() {
             </article>
 
 
-            <article class="card-proj">
+            <article class="card-proj mini-card module module-article article">
                 <header class="card-header">
                 <p>Feb 11th 2024</p>
                 <h2>Remove Background: Coming soon</h2>
@@ -151,7 +152,7 @@ export default function ProjectsCard() {
                 </div>
             </article>
 
-            <article class="card-proj">
+            <article class="card-proj mini-card module module-article article">
                 <header class="card-header">
                 <p>Sep 11th 2024</p>
                 <h2>Working..</h2>
@@ -176,7 +177,7 @@ export default function ProjectsCard() {
                 </div>
             </article>
 
-            <article class="card-proj">
+            <article class="card-proj mini-card module module-article article">
                 <header class="card-header">
                 <p>Sep 11th 2020</p>
                 <h2>Automl: TBD</h2>

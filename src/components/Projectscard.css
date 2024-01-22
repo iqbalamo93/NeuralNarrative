@@ -315,3 +315,69 @@ a {
         flex:0 0 175px
     }
 }
+
+@media (max-width: 1200px) {
+    body.home .mini-card {
+        min-width:220px
+    }
+
+    body.home .mini-card:not(:first-child) {
+        margin-left: -30px
+    }
+
+    body.home .mini-card:hover {
+        transform: translateY(-1rem)
+    }
+
+    body.home .mini-card:hover~.mini-card {
+        transform: translateX(30px)
+    }
+}
+
+@media (max-width: 800px) {
+    body.home .mini-card {
+        min-width:190px
+    }
+
+    body.home .mini-card:not(:first-child) {
+        margin-left: -10px
+    }
+
+    body.home .mini-card:hover {
+        transform: translateY(-1rem)
+    }
+
+    body.home .mini-card:hover~.mini-card {
+        transform: translateX(10px)
+    }
+}
+
+.mini-card-grid::-webkit-scrollbar {
+    width: 10px;
+    height: 10px
+}
+.mini-card-grid::-webkit-scrollbar-thumb {
+    background: #434343;
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 2px hsla(0,0%,100%,.25),inset -2px -2px 2px rgba(0,0,0,.25)
+}
+.mini-card-grid::-webkit-scrollbar-track {
+    background: linear-gradient(90deg,#434343,#434343 1px,#262626 0,#262626)
+}
+
+@media (max-width: 1200px) {
+    body.home .mini-card-grid {
+        overflow-x:visible
+    }
+}
+
+@media (max-width: 500px) {
+    .popular-articles {
+        overflow-x: hidden !important;
+    }
+}
+@media (max-width: 500px) {
+    .popular-header.header-card {
+        display: none;
+    }
+}
