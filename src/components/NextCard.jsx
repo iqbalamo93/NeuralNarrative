@@ -139,8 +139,8 @@ export default function App() {
 
 
       </CarouselContent>
-  {/* <CarouselPrevious /> */}
-  {/* <CarouselNext /> */}
+  <CarouselPrevious />
+  <CarouselNext />
   </Carousel>
 
   )
