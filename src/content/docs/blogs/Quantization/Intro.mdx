@@ -4,6 +4,7 @@ description: A guide in my new Starlight docs site.
 ---
 import { Image } from 'astro:assets';
 import quantized from "./quantized_1.png";
+import ex1 from './ex1.png'
 import asymetric from './asymetric.png'; 
 import '../../../../styles/global.css';
 
@@ -115,10 +116,26 @@ Let's examine the formula that facilitates this conversion from floating-point n
     <Image className="" src={asymetric} alt="A description of my image." /> 
 </div>
 
+The term $\alpha$ is known as the zero point. Essentially, it represents a mapping of the zero point from a source vector to a quantized vector. This means it maps the zero point in a floating number to an equivalent new number in the quantized series. Consider the following example:
+
+<div  style={{ display: "flex", justifyContent: "center" }}>
+    <Image className="" src={ex1} alt="A description of my image." /> 
+</div>
+
+From the example we discussed, we see that the number 0 is mapped to 121, which we call the zero point. When we de-quantize, two key parameters come into play: scale and zero point. The scale depends on two values, $\alpha$ and $\beta$, which represent the maximum and minimum values of our vector. However, there's a catch. If any of these points are outliers, they can cause quantization errors. You might have noticed this in the error vector - it's not all zeros as we would expect. 
+
+To tackle this, one strategy is to use percentiles, like the 99th or 10th, for determining the max and min values. Ultimately, our goal is to minimize the error between the reconstructed array and the original one. Another important aspect of asymmetric quantization is understanding the range. The minimum value from the original data is mapped to zero, and the maximum value is mapped to $2^n - 1$, where \(n\) is the bits used for quantization.
+
+Now, let's explore Symmetric Quantization.
+
+
 ### Symmetric Quantization
 <a id="symmetric"></a>
-Content for symmetric quantization...
+In symmetric quantization, we map the entire floating-point vector to a range that is equidistant on both sides of the zero point. This range extends equally in both negative and positive directions. To determine the mapping range, we first find the maximum absolute value in the vector, which we call $\alpha$. This gives us a mapping range of $[-\alpha, \alpha]$. Our quantized range then becomes $[-(2^n - 1), 2^n - 1]$, where \(n\) is the number of bits used for quantization.
 
+
+
+### Beyond Linear Qunatization
 Beyond these, the field of quantization is rich with diverse methods, each suited to different scenarios and requirements. For instance, [DorEfa](https://intellabs.github.io/distiller/algo_quantization.html#dorefa) and [WRPN](https://intellabs.github.io/distiller/algo_quantization.html#wrpn) are two other notable techniques that have emerged, offering unique approaches to reducing model size and computational overhead. While our current discussion centers on Range-Based Linear Quantization, it's important to acknowledge these other methodologies as well. Future articles will delve into DorEfa and WRPN, providing a comprehensive understanding of the landscape of quantization in machine learning.
 
 </article>
