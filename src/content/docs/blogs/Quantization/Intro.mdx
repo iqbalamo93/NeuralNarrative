@@ -5,6 +5,7 @@ description: A guide in my new Starlight docs site.
 import { Image } from 'astro:assets';
 import quantized from "./quantized_1.png";
 import ex1 from './ex1.png'
+import sym from './sym.png'
 import asymetric from './asymetric.png'; 
 import '../../../../styles/global.css';
 
@@ -14,7 +15,7 @@ Quantization is a critical concept in the fields of artificial intelligence (AI)
 
 ## What is Quantization?
 
-Quantization, in the context of AI and ML, refers to the process of minimizing the number of bits required to represent a number. In practice, this often involves converting floating-point representations, which are typically used in AI models, to integer representations. This process is an essential component of model compression strategies, along with other techniques such as pruning, knowledge distillation, and low-rank factorization.
+Quantization refers to the process of minimizing the number of bits required to represent a number. In practice, this often involves converting floating-point representations in higher precision formats to lower precision formats. This can include converting an array or weight matrix or model that is in FP32 to FP16, or INT4, or INT8 representations. This process is an essential component of model compression strategies, along with other techniques such as pruning, knowledge distillation, and low-rank factorization.
 
 ## Why Do We Need Quantization?
 
@@ -64,8 +65,8 @@ w = [
 w = torch.tensor(w)
 
 def asymmetric_quantization(weight_matrix, bits, target_dtype= torch.uint8):
-    alphas = (w.max(dim=-1)[0]).unsqueeze(1)
-    betas = (w.min(dim=-1)[0]).unsqueeze(1)
+    alphas = (weight_matrix.max(dim=-1)[0]).unsqueeze(1)
+    betas = (weight_matrix.min(dim=-1)[0]).unsqueeze(1)
     scale = (alphas - betas) / (2**bits-1)
     zero = -1*torch.round(betas / scale)
     lower_bound, upper_bound = 0, 2**bits-1
@@ -133,7 +134,56 @@ Now, let's explore Symmetric Quantization.
 <a id="symmetric"></a>
 In symmetric quantization, we map the entire floating-point vector to a range that is equidistant on both sides of the zero point. This range extends equally in both negative and positive directions. To determine the mapping range, we first find the maximum absolute value in the vector, which we call $\alpha$. This gives us a mapping range of $[-\alpha, \alpha]$. Our quantized range then becomes $[-(2^n - 1), 2^n - 1]$, where \(n\) is the number of bits used for quantization.
 
+let's delve into formula,
 
+<div  style={{ display: "flex", justifyContent: "center" }}>
+    <Image className="" src={sym} alt="A description of my image." /> 
+</div>
+
+As compared to asymmetic quantization, we don't have any zero point here,zero is mapped to zero,
+let's consider an example:
+
+<details>
+        <summary>Click here to see code:</summary>
+
+```python
+torch.set_printoptions(sci_mode=False)
+def symmetric_quantization(weight_matrix, bits, target_dtype= torch.int8):
+    alphas = (weight_matrix.abs().max(dim=-1)[0]).unsqueeze(1)
+    scale = (alphas) / ((2**(bits-1))-1)
+
+    lower_bound, upper_bound = -(2**(bits-1)-1), (2**(bits-1))-1
+
+    weight_matrix = torch.round(weight_matrix / scale)
+    weight_matrix[weight_matrix < lower_bound] = lower_bound
+    weight_matrix[weight_matrix > upper_bound] = upper_bound
+
+    return weight_matrix.to(target_dtype),scale
+
+def symmetric_dequantization(weight_matrix,scale):
+    return weight_matrix*scale
+
+w = [[43.91, -44.93,0,22.99,-43.93,-11.35,38.48,-20.49,-38.61,-28.02],
+    [56.45,0,125,22,154,0.15,-125,256,36,-365]]
+
+w = torch.tensor(w)
+
+
+w_quant,scale = symmetric_quantization(w, 8)
+w_dequant = symmetric_dequantization(w_quant, scale)
+
+
+
+print('Original Matrix is: \n',w,'\n\n','Quantized Matrix is: \n',w_quant,'\n\n'\
+      'De-quantized is \n',w_dequant,'\n')
+
+original_size_in_bytes= w.numel()*w.element_size()
+Qunatized_size_in_bytes= w_quant.numel()*w_quant.element_size()
+
+print(f'Size before quantization: {original_size_in_bytes} \nSize after quantization: {Qunatized_size_in_bytes}')
+```
+
+</details>
 
 ### Beyond Linear Qunatization
 Beyond these, the field of quantization is rich with diverse methods, each suited to different scenarios and requirements. For instance, [DorEfa](https://intellabs.github.io/distiller/algo_quantization.html#dorefa) and [WRPN](https://intellabs.github.io/distiller/algo_quantization.html#wrpn) are two other notable techniques that have emerged, offering unique approaches to reducing model size and computational overhead. While our current discussion centers on Range-Based Linear Quantization, it's important to acknowledge these other methodologies as well. Future articles will delve into DorEfa and WRPN, providing a comprehensive understanding of the landscape of quantization in machine learning.
