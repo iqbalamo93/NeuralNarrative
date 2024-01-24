@@ -6,6 +6,7 @@ import { Image } from 'astro:assets';
 import quantized from "./quantized_1.png";
 import ex1 from './ex1.png'
 import sym from './sym.png'
+import smex from './smex.png'
 import asymetric from './asymetric.png'; 
 import '../../../../styles/global.css';
 
@@ -143,6 +144,11 @@ let's delve into formula,
 As compared to asymmetic quantization, we don't have any zero point here,zero is mapped to zero,
 let's consider an example:
 
+<div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+  <Image src={smex} alt="A description of my image." style={{ width: "60%" }} /> 
+</div>
+In symmetric quantization, it is evident that values within the negative domain remain in the negative domain even after quantization. Additionally, the zero point remains consistent in both vectors or mappings.
+
 <details>
         <summary>Click here to see code:</summary>
 
@@ -182,8 +188,10 @@ Qunatized_size_in_bytes= w_quant.numel()*w_quant.element_size()
 
 print(f'Size before quantization: {original_size_in_bytes} \nSize after quantization: {Qunatized_size_in_bytes}')
 ```
-
 </details>
+
+An important aspect to consider is that both of these quantization methods are susceptible to outliers. This is because the scale factor is dependent on the range, and the presence of outliers can significantly impact the errors. To mitigate this, various strategies can be employed. One approach is to determine the maximum and minimum values based on percentiles. Another strategy involves selecting the max and min values from a specified range, such as $[\alpha, \beta]$. This can be achieved through methods like grid search, which aim to minimize the mean squared error
+In addition to the Mean-Squared-Error (MSE) approach, where we choose parameters $\alpha$ and $\beta$ to minimize the MSE between the original and quantized values, Cross-Entropy plays a crucial role in certain scenarios. This method is particularly relevant when quantizing tensors in which not all values hold equal importance. A prime example is found in the Softmax layer of Large Language Models (LLMs). In these models, maintaining the hierarchy of the most significant values post-quantization is vital due to the reliance on inference strategies like Greedy, Top-P, or Beam search. Therefore, the goal becomes to find $\alpha$ and $\beta$ that minimize the Cross-Entropy between the original softmax values and the quantized softmax values, ensuring that the order of the largest values is preserved after quantization.
 
 ### Beyond Linear Qunatization
 Beyond these, the field of quantization is rich with diverse methods, each suited to different scenarios and requirements. For instance, [DorEfa](https://intellabs.github.io/distiller/algo_quantization.html#dorefa) and [WRPN](https://intellabs.github.io/distiller/algo_quantization.html#wrpn) are two other notable techniques that have emerged, offering unique approaches to reducing model size and computational overhead. While our current discussion centers on Range-Based Linear Quantization, it's important to acknowledge these other methodologies as well. Future articles will delve into DorEfa and WRPN, providing a comprehensive understanding of the landscape of quantization in machine learning.
