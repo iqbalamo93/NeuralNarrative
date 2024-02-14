@@ -51,6 +51,7 @@ export default function ProjectsCard() {
                 <p>Jan 09th 2024</p>
                 <a href='https://summarizetubeai.streamlit.app/'>
                     <h2>Youtube summarizer!</h2>
+                <p>Summarize Youtube videos powered by LLM</p>
                 </a>
                 </header>
 
@@ -76,17 +77,20 @@ export default function ProjectsCard() {
 
 
 
-            <article class="card-proj mini-card module module-article article">
-                <header class="card-header">
-                <p>Sep 11th 2023</p>
-                <h2>Tabular data Info extractor</h2>
+            <article className="card-proj mini-card module module-article article">
+                <header className="card-header">
+                <p>Jan 09th 2024</p>
+                <a href='https://arxiv-paperrating.streamlit.app/'>
+                    <h2>Arxiv Reseach Paper Evaluator"!</h2>
+                    <p>Assessing Research Papers with AI Precision</p>
+                </a>
                 </header>
-
-                <div class="card-author">
-                <a class="author-avatar" href="#">
+                
+                <div className="card-author">
+                <a className="author-avatar" href="#">
                     <img src="https://image.lexica.art/full_webp/06bb677b-5666-4f10-b941-150b3e89118f" />
                 </a>
-                <svg class="half-circle" viewBox="0 0 106 57">
+                <svg className="half-circle" viewBox="0 0 106 57">
                     <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
                 </svg>
 
@@ -96,8 +100,8 @@ export default function ProjectsCard() {
                 </div>
                 </div>
                 <div class="tags">
-                <a href="#">LLM</a>
                 <a href="#">RAG</a>
+                <a href="#">LLM</a>
                 </div>
             </article>
 
