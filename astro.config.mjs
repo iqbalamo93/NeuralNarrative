@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
-// import starlight from '@astrojs/starlight';
-import starlight from 'starlight-patch';
+import starlight from '@astrojs/starlight';
+// import starlight from 'starlight-patch';
 import remarkMath from 'remark-math';
 import rehypeMathJax from 'rehype-mathjax';
 import react from "@astrojs/react";
