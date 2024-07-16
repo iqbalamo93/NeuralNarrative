@@ -20,6 +20,10 @@ export default defineConfig({
     social: {
       github: 'https://github.com/iqbalamo93/NeuralNarrative'
     },
+    components:{
+
+      Header: './src/components/Header.astro',
+    },
     sidebar: [{
       label: 'Blogs',
       autogenerate: {
