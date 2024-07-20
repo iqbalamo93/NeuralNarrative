@@ -4,12 +4,11 @@ description: A guide in my new Starlight docs site.
 ---
 
 import '../../../../styles/global.css';  
-import myImage from "./transformer.png";
+import myImage from "../../../../assets/transformer.png";
 import pe from './pe.png'
 import React from 'react';
 import ff_image from "./ff.png";
 import { Image } from 'astro:assets';
-import  {FloatingImageWidget} from '../../../../components/FloatingImageWidget'
 
 #### Crafting the Transformer: An Object-Oriented Approach
 
@@ -19,12 +18,8 @@ To bring the Transformer to life, we've broken down the development process into
 
 Within our `model.py`, we've crafted a robust framework composed of nine classes and one essential function. These components form the backbone of our implementation:
 
-<div align="center" class="click-zoom container transformer_image" style={{ display: "flex", justifyContent: "center" }}>
-    <input type="checkbox" id="zoom_img"/>
-    <label for="zoom_img">
-    <Image className="" src={myImage} alt="A description of my image." />
-    </label> 
-</div>
+
+<Image className="" src={myImage} width="300" alt="A description of my image." />
 
 
 ## Table of Contents
@@ -81,9 +76,9 @@ class InputEmbeddings(nn.Module):
 
 The `PositionalEncoding` is designed to provide each token in a sequence with a unique position encoding. 
 Consider this example:
-<div class="pe">
+
     <Image src={pe}  alt="A description of my image." />
-</div>
+
 In the sentence `'I love watching birds'`, the word `'I'` is at position 0, and the word 'birds' is at position 3. Each word is converted into a vector representation with a dimension of d_model(This is from embeddings layer). Positional encoding adds positional information to each vector. This is achieved by using a 'pos' attribute, where the even positions in the vector receive a sine function value, and the odd positions receive a cosine function value, as illustrated below
 ```python
 class PositionalEncoding(nn.Module):

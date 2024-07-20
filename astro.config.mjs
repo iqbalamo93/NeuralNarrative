@@ -1,10 +1,11 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import remarkMath from 'remark-math';
-import rehypeMathJax from 'rehype-mathjax';
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
+import mdx from "@astrojs/mdx";
 import markdoc from "@astrojs/markdoc";
+import rehypeMathJax from 'rehype-mathjax';
 // import  { Props } from '@astrojs/starlight/props';
 import starlightImageZoom from 'starlight-image-zoom'
 
@@ -18,12 +19,15 @@ export default defineConfig({
     starlight({
       plugins: [starlightImageZoom()],
       title: 'Home',
+      customCss: ['./src/styles/custom.css'],
       social: {
         github: 'https://github.com/iqbalamo93/NeuralNarrative'
       },
       components: {
         Header: './src/components/Header.astro',
       },
+      customCss: ['./src/styles/theme.css']
+      ,
       sidebar: [
         {
           label: 'Blogs',
@@ -68,6 +72,7 @@ export default defineConfig({
     }),
     react(),
     tailwind(),
-    markdoc()
+    markdoc(),
+    mdx(),
   ]
 });

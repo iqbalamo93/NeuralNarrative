@@ -3,8 +3,17 @@ title: Self-Attention
 description: A guide in my new Starlight docs site.
 ---
 import { Image } from 'astro:assets';
-import myImage from '../../../../assets/single_head.png';
+import single_head from '../../../../assets/single_head.png';
+import multi_head from '../../../../assets/multi_head.png';
 
-    <Image className="" src={myImage} alt="A description of my image." />
+##  Single Headed 
+<Image className="" src={single_head} alt="A description of my image." />
+- Ignore the Softmax operation and normalize by dividing by the square root of `d_model`, because these operations do not affect the dimensions of the matrices involved.
 
+## Multiheaded
+<Image className="" src={multi_head} alt="A description of my image." />
+- IIgnore the Softmax operation and normalize by dividing by the square root of `d_model`, because these operations do not affect the dimensions of the matrices involved.
 
+<ul style="list-style-type: circle;">
+  <li>Ignoring Softmax and normalizing (divide by sqrt of d_model)</li>
+</ul>
