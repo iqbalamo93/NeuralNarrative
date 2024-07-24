@@ -25,6 +25,7 @@ export default defineConfig({
       },
       components: {
         Header: './src/components/Header.astro',
+        ThemeProvider:'./src/components/ThemeProvider.astro',
       },
       customCss: ['./src/styles/theme.css']
       ,
