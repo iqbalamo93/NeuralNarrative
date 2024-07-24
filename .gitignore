@@ -6,12 +6,6 @@ dist/
 # dependencies
 node_modules/
 
-
-# Do not ignore @astrojs packages
-!node_modules/@astrojs
-!node_modules/@astrojs/**
-
-
 # logs
 npm-debug.log*
 yarn-debug.log*
