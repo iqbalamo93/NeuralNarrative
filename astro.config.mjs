@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import sitemap from '@astrojs/sitemap';
 import remarkMath from 'remark-math';
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
@@ -15,6 +16,7 @@ export default defineConfig({
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeMathJax]
   },
+  site: 'https://neuralnarrative.io',
   integrations: [
     starlight({
       plugins: [starlightImageZoom()],
@@ -75,5 +77,6 @@ export default defineConfig({
     tailwind(),
     markdoc(),
     mdx(),
+    sitemap(),
   ]
 });
