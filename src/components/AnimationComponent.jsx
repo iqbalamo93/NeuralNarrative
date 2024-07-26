@@ -3,7 +3,7 @@ import animationData from '../assets/animation.json';
 
 function AnimationComponent(){
     const options = {
-        animationData: animationData,
+        animationData: JSON.parse(JSON.stringify(animationData)),
         loop: true
     };
     const { View } = useLottie(options)
