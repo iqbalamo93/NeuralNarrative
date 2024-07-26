@@ -1,9 +1,9 @@
-import { useLottie } from "lottie-web/build/player/lottie_light";
-import animationData from '../assets/animation.json';
+import { useLottie } from "lottie-react";
+import animation from '../assets/animation.json';
 
 function AnimationComponent(){
     const options = {
-        animationData: JSON.parse(JSON.stringify(animationData)),
+        animationData: JSON.parse(JSON.stringify(animation)),
         loop: true
     };
     const { View } = useLottie(options)
