@@ -1,4 +1,4 @@
-import { useLottie } from "lottie-react";
+import { useLottie } from "lottie-web/build/player/lottie_light";
 import animationData from '../assets/animation.json';
 
 function AnimationComponent(){
