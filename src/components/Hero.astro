@@ -2,7 +2,12 @@
 import type { Props } from '@astrojs/starlight/props';
 import { Image } from 'astro:assets';
 import CallToAction from '@astrojs/starlight/components/CallToAction.astro';
-import AnimationComponent from './AnimationComponent'
+import AnimationComponent from './AnimationComponent';
+
+import '@fontsource/press-start-2p';
+import '@fontsource/londrina-shadow';
+import '@fontsource/rampart-one';
+
 const { data } = Astro.props.entry;
 const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 const { PAGE_TITLE_ID } = Astro.props.entry.data;
@@ -28,27 +33,29 @@ if (image) {
 		rawHtml = image.html;
 	}
 }
+
 ---
 
 <div class="hero">
-	<!-- {
-		darkImage && (
-			<Image
-				src={darkImage}
-				{...imageAttrs}
-				class:list={{ 'light:sl-hidden': Boolean(lightImage) }}
-			/>
-            
-		)
-	} -->
-    
-	<!-- {lightImage && <Image src={lightImage} {...imageAttrs} class="dark:sl-hidden" />} -->
-	{rawHtml && <div class="hero-html sl-flex" set:html={rawHtml} />}
+	<!-- {  rawHtml && <div class="hero-html sl-flex" set:html={rawHtml} />} -->
 	<div class="sl-flex stack">
+		
 		<div class="sl-flex copy">
-			<h1 id={PAGE_TITLE_ID} data-page-title set:html={title} />
-			{tagline && <div class="tagline" set:html={tagline} />}
+			<h1 class="animated-name"> Hi, I'm Iqbal<span class="wave">👋</span></h1>
+			<div class="skills">
+				<span class="skill">Web Developer</span>
+				<span class="skill">Data Scientist</span>
+				<span class="skill">Applied AI Engineer</span>
+			</div>
+
+			<!-- <h3 id={PAGE_TITLE_ID} data-page-title set:html={title} /> -->
+			 <div class="wrapper">
+				<h3 class="intro"> This is Neural Narrative<span class="book">📖</span></h3>
+				<div class="tagline"> My blog, containing articles and projects..</div>
+			</div>
 		</div>
+
+
 		{
 			actions.length > 0 && (
 				<div class="sl-flex actions">
@@ -59,7 +66,9 @@ if (image) {
 			)
 		}
 	</div>
-    <AnimationComponent client:only="react"/>
+	
+	<AnimationComponent client:only="react"/>
+</div>
 
 <style>
 	.hero {
@@ -83,6 +92,16 @@ if (image) {
 		text-align: center;
 	}
 
+	.intro{
+		font-family: 'Rampart One';
+		padding-bottom: 0;
+		line-height: 1;
+	}
+
+	.tagline{
+		font-family: 'Rampart One';
+	}
+
 	.copy {
 		flex-direction: column;
 		gap: 1rem;
@@ -97,6 +116,86 @@ if (image) {
 		font-size: clamp(var(--sl-text-3xl), calc(0.25rem + 5vw), var(--sl-text-6xl));
 		line-height: var(--sl-line-height-headings);
 		font-weight: 600;
+		color: var(--sl-color-white);
+		margin-bottom: 0;
+	}
+
+	.animated-name{
+		font-family: "Press Start 2P";
+		font-weight: 500;
+		font-size: clamp(var(--sl-text-2xl), calc(0.25rem + 5vw), var(--sl-text-2xl));
+		animation: colorChange 3s infinite;
+	}
+
+	.wave {
+		display: inline-block;
+		animation: wave-animation 2s infinite;
+		transform-origin: 70% 70%;
+	}
+
+	@keyframes wave-animation {
+		0% { transform: rotate(0deg); }
+		10% { transform: rotate(14deg); }
+		20% { transform: rotate(-8deg); }
+		30% { transform: rotate(14deg); }
+		40% { transform: rotate(-4deg); }
+		50% { transform: rotate(10deg); }
+		60% { transform: rotate(0deg); }
+		100% { transform: rotate(0deg); }
+	}
+
+	.skills {
+    font-family: 'Press Start 2P';
+    font-size: clamp(var(--sl-text-sm), calc(0.25rem + 1.5vw), var(--sl-text-lg));
+    margin: 0;
+    height: 1.5em;
+    overflow: hidden;
+    /* position: relative; */
+	margin: 0;
+	height: 1.5em;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	/* position: relative; */
+		}
+
+	.skill {
+		position: absolute;
+		width: 100%;
+		opacity: 0;
+		transform: translateY(20px);
+		animation: skillSlideshow 9s  infinite;
+	}
+
+.skill:nth-child(1) { animation-delay: 0s; }
+.skill:nth-child(2) { animation-delay: 3s; }
+.skill:nth-child(3) { animation-delay: 6s; }
+
+@keyframes skillSlideshow {
+    0%, 33%, 100% { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    3%, 30% { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+    5%, 28% {
+        /* text-shadow: 0 0 8px rgba(255, 255, 255, 0.7); */
+    }
+}
+	@keyframes colorChange {
+		0% { color: purple; }
+		50% { color: orange; }
+		100% { color: purple; }
+	}
+
+	h3 {
+		font-size: clamp(var(--sl-text-3xl), calc(0.25rem + 5vw), var(--sl-text-3xl));
+		font-weight: 500;
+		margin-bottom: 0;
 		color: var(--sl-color-white);
 	}
 
@@ -134,6 +233,9 @@ if (image) {
 
 		.actions {
 			justify-content: flex-start;
+		}
+		.skills{
+			align-items: start;
 		}
 	}
 </style>
