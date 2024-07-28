@@ -47,7 +47,17 @@ if (image) {
 				<span class="skill">Data Scientist</span>
 				<span class="skill">Applied AI Engineer</span>
 			</div>
-
+		<div class="tech-stack">
+			<span class="tech-intro">Stack I use:</span>
+			<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" title="React">
+			<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" title="Next.js">
+			<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" title="MongoDB">
+			<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg" alt="Astro" title="Astro">
+			<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" title="Python">
+			<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch" title="PyTorch">
+			<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow" title="TensorFlow">
+          
+		</div>
 			<!-- <h3 id={PAGE_TITLE_ID} data-page-title set:html={title} /> -->
 			 <div class="wrapper">
 				<h3 class="intro"> This is Neural Narrative<span class="book">📖</span></h3>
@@ -93,13 +103,17 @@ if (image) {
 	}
 
 	.intro{
-		font-family: 'Rampart One';
 		padding-bottom: 0;
 		line-height: 1;
+		font-size: 1rem;
 	}
 
 	.tagline{
-		font-family: 'Rampart One';
+		font-size: 0.2rem;
+	}
+	
+	.intro, .tagline{
+		font-family: 'Press Start 2P';
 	}
 
 	.copy {
@@ -209,6 +223,38 @@ if (image) {
 		flex-wrap: wrap;
 		justify-content: center;
 	}
+
+	.tech-stack {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.3rem;
+	margin: 1rem 0;
+}
+
+.tech-intro {
+	font-family: 'Press Start 2P', cursive;
+	font-size: clamp(var(--sl-text-xs), calc(0.2rem + 1vw), var(--sl-text-sm));
+	color: var(--sl-color-gray-2);
+	margin-right: 0.5rem;
+}
+
+.tech-stack img {
+	width: 40px; /* Adjust size as needed */
+	height: 40px; /* Adjust size as needed */
+	transition: transform 0.3s ease;
+}
+
+.tech-stack img:hover {
+	transform: scale(1.2);
+}
+
+  @media (min-width: 50rem) {
+    .tech-stack {
+      justify-content: flex-start;
+    }
+  }
 
 	@media (min-width: 50rem) {
 		.hero {
