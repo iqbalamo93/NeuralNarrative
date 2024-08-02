@@ -50,15 +50,16 @@ export default defineConfig({
               label: 'Quantization',
               items: ['blogs/quantization/intro',],
             },
-
           ],
         },
+
+        
         {
-          label: 'Books Review',
+          label: 'Quick Books',
           items: [
             {
               label: 'What is this!',
-              link: '/books-review/intro-reviews/' // will change this in future
+              link: '/quick-books/intro-reviews/' // will change this in future
             }
           ]
         },
