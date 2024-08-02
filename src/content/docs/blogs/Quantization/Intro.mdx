@@ -43,12 +43,9 @@ By addressing the challenges posed by the size and complexity of AI models, quan
 
 Consider the example illustrated below, where we have a 4x4 weight matrix. These weights are initially stored as 32-bit floating-point numbers, which is a standard data type for such operations, consuming a total of 64 bytes. Our goal is to reduce this footprint while retaining as much of the original information as possible.
 
-<div class="click-zoom container " style={{ display: "flex", justifyContent: "center" }}>
-    <input type="checkbox" id="zoom_img"/>
-    <label for="zoom_img">
-    <Image className="" src={quantized} alt="A description of my image." />
-    </label> 
-</div>
+
+<Image className="" src={quantized} alt="A description of my image." />
+
 
 <details>
     <summary>Click here to see code:</summary>
@@ -118,7 +115,7 @@ Let's examine the formula that facilitates this conversion from floating-point n
     <Image className="" src={asymetric} alt="A description of my image." /> 
 </div>
 
-The term $\alpha$ is known as the zero point. Essentially, it represents a mapping of the zero point from a source vector to a quantized vector. This means it maps the zero point in a floating number to an equivalent new number in the quantized series. Consider the following example:
+The term $z$ is known as the zero point. Essentially, it represents a mapping of the zero point from a source vector to a quantized vector. This means it maps the zero point in a floating number to an equivalent new number in the quantized series. Consider the following example:
 
 <div  style={{ display: "flex", justifyContent: "center" }}>
     <Image className="" src={ex1} alt="A description of my image." /> 

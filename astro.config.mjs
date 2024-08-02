@@ -46,6 +46,11 @@ export default defineConfig({
               label: 'Attention',
               items: ['blogs/attention/self_attention',],
             },
+            {
+              label: 'Quantization',
+              items: ['blogs/quantization/intro',],
+            },
+
           ],
         },
         {
