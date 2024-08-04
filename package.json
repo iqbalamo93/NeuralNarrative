@@ -16,6 +16,7 @@
     "@astrojs/starlight": "^0.25.2",
     "@astrojs/starlight-tailwind": "^2.0.3",
     "@astrojs/tailwind": "^5.1.0",
+    "@fontsource-variable/playwrite-es-deco": "^5.0.1",
     "@fontsource/londrina-shadow": "^5.0.19",
     "@fontsource/press-start-2p": "^5.0.20",
     "@fontsource/rampart-one": "^5.0.19",

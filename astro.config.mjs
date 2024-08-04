@@ -21,6 +21,9 @@ export default defineConfig({
     starlight({
       plugins: [starlightImageZoom()],
       title: 'Home',
+      logo: {
+        src: './src/assets/my-logo.svg',
+      },
       customCss: ['./src/styles/custom.css'],
       social: {
         github: 'https://github.com/iqbalamo93/NeuralNarrative'
@@ -28,7 +31,8 @@ export default defineConfig({
       components: {
         Header: './src/components/Header.astro',
         Hero: './src/components/Hero.astro',
-        ThemeProvider:'./src/components/ThemeProvider.astro',
+        ThemeProvider: './src/components/ThemeProvider.astro',
+        SiteTitle: './src/components/SiteTitle.astro',
       },
       customCss: ['./src/styles/theme.css']
       ,
@@ -48,7 +52,7 @@ export default defineConfig({
             },
             {
               label: 'Quantization',
-              items: ['blogs/quantization/intro',],
+              items: ['blogs/quantization/intro','blogs/quantization/dynamic_cali'],
             },
           ],
         },

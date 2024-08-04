@@ -1,14 +1,15 @@
 ---
 import type { Props } from '@astrojs/starlight/props';
-
+// Supports weights 100-400
+import '@fontsource/press-start-2p';
 import config from 'virtual:starlight/user-config';
 
 import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
 import Search from '@astrojs/starlight/components/Search.astro';
-import SiteTitle from '@astrojs/starlight/components/SiteTitle.astro';
 import SocialIcons from '@astrojs/starlight/components/SocialIcons.astro';
 import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
-
+//Customs
+import SiteTitle from './SiteTitle.astro';
 const shouldRenderSearch =
 	config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
 ---
@@ -16,21 +17,23 @@ const shouldRenderSearch =
 	<div class="title-wrapper sl-flex">
 		<SiteTitle {...Astro.props} />
 	</div>
+
+	
 	<div class="sl-flex">
 		{shouldRenderSearch && <Search {...Astro.props} />}
 	</div>
+
 	<div class="sl-hidden md:sl-flex right-group">
 		<div class="sl-flex social-icons">
 			<SocialIcons {...Astro.props} />
 		</div>
-		<!-- <ThemeSelect {...Astro.props} /> -->
-		<LanguageSelect {...Astro.props} />
 	</div>
 </div>
 
 <style>
 	.header {
 		gap: var(--sl-nav-gap);
+		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		height: 100%;
@@ -39,6 +42,9 @@ const shouldRenderSearch =
 	.title-wrapper {
 		/* Prevent long titles overflowing and covering the search and menu buttons on narrow viewports. */
 		overflow: hidden;
+		font-family: 'Press Start 2P', cursive;
+		font-size: 300;
+
 	}
 
 	.right-group,
